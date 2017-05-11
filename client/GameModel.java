@@ -1,4 +1,4 @@
-
+// 作成者 吉瀬
 
 public class GameModel{
 	
