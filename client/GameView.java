@@ -18,7 +18,7 @@ public class GameView extends JFrame{
 	
 	// 各種値
 	private String playerName = "";
-	private int playerColor;
+	private int playerColor = GameModel.BLACK;
 	private int roomNum;
 	
 	// 定数
@@ -70,6 +70,9 @@ public class GameView extends JFrame{
 		setVisible(true);
 	}
 	
+	
+	// 以下画面遷移
+	
 	public void switchViewToDecideName() {
 		// スタート画面から、名前入力画面に遷移する。
 		
@@ -119,6 +122,10 @@ public class GameView extends JFrame{
 	
 	public void setPlayerColor(int arg) {
 		playerColor = arg;
+	}
+	
+	public int getPlayerColor() {
+		return playerColor;
 	}
 	
 }

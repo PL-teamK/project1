@@ -6,8 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class OthelloPanel extends JPanel {
-	GameView gameView;
-	GameController gameController;
+	private GameView gameView;
+	private GameController gameController;
 	
 	// 盤面描画を独立させる。
 	private JPanel boardPanel;
@@ -18,6 +18,10 @@ public class OthelloPanel extends JPanel {
 	private JLabel playerLabel;
 	private int labelsWidth = ViewParam.WIDTH * 2 / 10;
 	private int labelsHeight = ViewParam.HEIGHT * 3 / 10;
+	
+	// 変数の宣言
+	private boolean highlightFlag = true;
+	private boolean isMyTurn;
 	
 	
 	public OthelloPanel(GameView gameview, GameController gameController) {
@@ -51,9 +55,17 @@ public class OthelloPanel extends JPanel {
 		add(playerLabel);
 		
 		// 再描画テスト用
-		JButton testButton = new JButton("repaint");
+		JButton testButton = new JButton("ハイライトをOFFにする");
 		testButton.addActionListener(e -> {
-			boardPanel.repaint();
+			if (highlightFlag) {
+				// ハイライトをOFFにする
+				highlightFlag = false;
+				testButton.setText("ハイライトをONにする");
+				
+			} else {
+				highlightFlag = true;
+				testButton.setText("ハイライトをONにする");
+			}
 		});
 		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 20, ViewParam.HEIGHT / 20);
 		add(testButton);
@@ -63,6 +75,15 @@ public class OthelloPanel extends JPanel {
 		setSize(ViewParam.WIDTH, ViewParam.HEIGHT);
 		
 		
+	}
+	
+	public void myTurn() {
+		((BoardPanel) boardPanel).changeButtonsStateTo(true);
+		((BoardPanel) boardPanel).printBoard();
+		if (highlightFlag) {
+			// ハイライトを行う．
+			((BoardPanel) boardPanel).printHighlight();
+		}
 	}
 }
 

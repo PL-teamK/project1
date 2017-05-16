@@ -11,4 +11,5 @@ public class ViewParam{
 	public static final Color OTHELLO_BLACK = new Color(30, 30, 30);
 	public static final Color OTHELLO_WHITE = new Color(225, 225, 225);
 	public static final Color BOARD_LINE = new Color(128, 128, 128);
+	public static final Color HIGHLIGHT = new Color(0, 255, 255);
 }
