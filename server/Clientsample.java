@@ -23,8 +23,9 @@ class Clientsample {
                                 new InputStreamReader(socket.getInputStream()));
 
                         String getline = rd.readLine();
-                        System.out.println("Message from Server:" + getline);
-
+                        if(getline != null) {
+                            System.out.println("Message from Server:" + getline);
+                        }
 
                 } catch (IOException e) {
                     System.err.println("ERROR: Data received error");
@@ -44,11 +45,19 @@ class Clientsample {
                 try {
                     //ルーム情報の作成、サーバへ送信する
                     if (select_room == 1) {
-                        System.out.print("input room number(0～5):");
                         select_room = 0;
-                        BufferedReader input =
-                                new BufferedReader(new InputStreamReader(System.in));
-                        String str = input.readLine();
+                        boolean check_num = false;
+                        do {
+
+                            System.out.print("input room number(0～5):");
+                            select_room = 0;
+                            BufferedReader input =
+                                    new BufferedReader(new InputStreamReader(System.in));
+                            str = input.readLine();
+                            if(check_data(str) && Integer.parseInt(str) >= 0 && Integer.parseInt(str) <=5){
+                                check_num = true;
+                            }
+                        }while(!check_num);
 
                         //PrintWriter型のwriterに、ソケットの出力ストリームを渡す。(Auto Flush)
                         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
@@ -123,6 +132,16 @@ class Clientsample {
         }
     }
 
+
+
+    public boolean check_data(String data){
+        try{
+            Integer.parseInt(data);
+            return true;
+        }catch(NumberFormatException e){
+            return false;
+        }
+    }
 
     public static void main(String[] args) {
         Clientsample cs = new Clientsample();
