@@ -89,6 +89,7 @@ public class GameView extends JFrame{
 		thread = new Thread(matchingPanel);
 		thread.start();
 		
+		
 	}
 	
 	public void switchViewToOthello() {

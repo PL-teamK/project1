@@ -16,4 +16,8 @@ public class GameController {
 		// プレイヤー名はString型の変数である。
 		
 	}
+	
+	public void setChosenPos(int x, int y) {
+		
+	}
 }

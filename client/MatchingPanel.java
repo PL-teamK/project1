@@ -34,6 +34,7 @@ public class MatchingPanel extends JPanel implements Runnable{
 	
 	public void run() {
 		boolean point = true;
+		int count = 0;
 		while (flag) {
 			// finishMatching()メソッドが呼ばれるとフラグが変更されて、処理が終了する。
 			try {
@@ -43,6 +44,10 @@ public class MatchingPanel extends JPanel implements Runnable{
 					messageLabel.setText("マッチング中(テストなので一定時間後に遷移します).");
 				} else {
 					messageLabel.setText("マッチング中(テストなので一定時間後に遷移します)");
+				}
+				count++;
+				if (count == 5) {
+					finishMatching();
 				}
 			} catch (InterruptedException e){
 				e.printStackTrace();
