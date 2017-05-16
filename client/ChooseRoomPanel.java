@@ -77,7 +77,7 @@ public class ChooseRoomPanel extends JPanel{
 	}
 	
 	private void roomSelected(int room){
-		gameView.setPlayerColor(room);
+		gameView.setRoomNum(room);
 		gameView.switchViewToMatching();
 	}
 }

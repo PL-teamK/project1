@@ -94,6 +94,8 @@ public class GameView extends JFrame{
 		chooseRoomPanel.setVisible(false);
 		matchingPanel.setVisible(true);
 		
+		gameController.sendPlayerNameAndRoom(playerName, roomNum);
+		
 		
 		// 待機の間、文字列を変化させ続ける。
 		thread = new Thread(matchingPanel);
@@ -126,6 +128,10 @@ public class GameView extends JFrame{
 	
 	public int getPlayerColor() {
 		return playerColor;
+	}
+	
+	public void setRoomNum(int arg) {
+		roomNum = arg;
 	}
 	
 }

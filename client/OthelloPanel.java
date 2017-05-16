@@ -85,6 +85,15 @@ public class OthelloPanel extends JPanel {
 			((BoardPanel) boardPanel).printHighlight();
 		}
 	}
+	
+	public void setIsMyTurn(boolean bool) {
+		isMyTurn = bool;
+	}
+	
+	public boolean getIsMyTurn(boolean bool) {
+		return isMyTurn;
+	}
+	
 }
 
 class TimerLabel extends JLabel implements Runnable {
@@ -92,12 +101,40 @@ class TimerLabel extends JLabel implements Runnable {
 	private String header = "<html>残り時間<br>";
 	private String footer = "</html>";
 	private String body = "";
+	private GameView gameView;
+	// trueの場合には，自分の制限時間を示し，falseの場合は相手の制限時間を示す
+	private boolean flag;
+	// ルームによって制限時間は決まっている
+	private int room;
+	private int timeLimit;
 	
-	public TimerLabel() {
-		
+	
+	public TimerLabel(boolean bool, GameView gameView, int room) {
+		this.gameView = gameView;
+		flag = bool;
+		this.room = room;
 	}
 	
 	public void run() {
-		
+		while (true) {
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			if (flag) {
+				timeLimit--;
+				int minute = timeLimit / 60;
+				int seconds = timeLimit % 60;
+				body = minute + ":" + seconds;
+				setText(header + body + footer);
+			}
+		}
+	}
+	
+	public void setFlag(boolean bool) {
+		// カウントダウンのスタート&ストップを行う
+		// ルーム種別により，リセットも行うかも決める
+		flag = bool;
 	}
 }

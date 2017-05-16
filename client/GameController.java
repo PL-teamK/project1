@@ -5,17 +5,20 @@
 public class GameController {
 	private GameView gameView;
 	private GameModel gameModel;
+	// サーバーの向こう側を想定したスタブでテストを行う
+	private TestStub testStub;
+	
 	public GameController() {
 		// ゲームビューとゲームモデルの生成を行う
 		gameModel = new GameModel();
 		gameView = new GameView(this);
-		
+		testStub = new TestStub(this);
 	}
 	
-	public void sendPlayerName() {
+	public void sendPlayerNameAndRoom(String name, int room) {
 		// サーバーにプレイヤー名を送信する。
 		// プレイヤー名はString型の変数である。
-		
+		// ルーム種別も送信する．
 	}
 	
 	public void setChosenPos(int x, int y) {
