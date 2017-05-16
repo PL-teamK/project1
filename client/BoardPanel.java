@@ -1,10 +1,12 @@
 // 作成者 吉瀬
 // OthelloPanelに配置するパネルを定義
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+
 import java.awt.*;
 import java.awt.event.*;
 
-public class BoardPanel extends JPanel implements MouseListener {
+public class BoardPanel extends JPanel {
 	private GameController gameController;
 	private GameView gameView;
 	private OthelloPanel othelloPanel;
@@ -19,12 +21,13 @@ public class BoardPanel extends JPanel implements MouseListener {
 	private float lineWidth;
 	
 	public BoardPanel(GameController gameController, GameView gameView, OthelloPanel othelloPanel, int boardWidth) {
+		
 		this.gameController = gameController;
 		this.gameView = gameView;
 		this.othelloPanel = othelloPanel;
 		dimension = getSize();
-		buttonSize = boardWidth * 19 / 20 / 8;
-		lineWidth = boardWidth / 20 / 9;
+		buttonSize = boardWidth * 9 / 10 / 8;
+		lineWidth = boardWidth / 10 / 9;
 		System.out.println(boardWidth + " " + buttonSize + " " + lineWidth);
 		for (int i = 0; i < 8; i++ ) {
 			for (int j = 0 ; j < 8; j++) {
@@ -32,63 +35,55 @@ public class BoardPanel extends JPanel implements MouseListener {
 				buttons[j][i].setActionCommand(j+ "" +i);
 				buttons[j][i].setBounds((int)(buttonSize * j + lineWidth * (j + 1) + 3), (int)(buttonSize * i + lineWidth * (i + 1) + 3), (int)buttonSize, (int)buttonSize);
 				buttons[j][i].addActionListener(e -> {
+					//　クリックされるとgameControllerに選択された座標を送信する
 					String actionCmd = e.getActionCommand();
 					gameController.setChosenPos(actionCmd.charAt(0) - '0', actionCmd.charAt(1) - '0');
 					System.out.println((actionCmd.charAt(0) - '0') + " " + (actionCmd.charAt(1) - '0')); 
 				});
-				buttons[j][i].setBackground(ViewParam.BOARD_BACKGROUND);
-				
+				//buttons[j][i].setOpaque(true);
+				buttons[j][i].setBackground(ViewParam.BOARD_COLOR);
 				add(buttons[j][i]);
 				
 			}
 		}
 		
-		
+		//initBoard();
+		printBoard();
 		// 背景色(= 縁線色）
-		setBackground(ViewParam.BOARD_BACKGROUND);
+		setBackground(ViewParam.BOARD_LINE);
 		// レイアウトマネージャ無効
 		setLayout(null);
 		
 	}
 	
 	private int testCount = 0;
-//	public void paintComponent(Graphics g) {
-//		Graphics2D g2 = (Graphics2D)g;
-//		g2.setColor(ViewParam.BOARD_COLOR);
-//		testCount++;
-//		g2.drawString("" + testCount, dimension.width / 2, dimension.height / 2);
-//		
-//	} 
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		// クリックしたタイミングでクリック座標をGameControllerに渡す。
+	
+	private void initBoard() {
+		buttons[3][4].setBackground(ViewParam.OTHELLO_WHITE);
+		buttons[3][3].setBackground(ViewParam.OTHELLO_BLACK);
+		buttons[4][4].setBackground(ViewParam.OTHELLO_BLACK);
+		buttons[4][3].setBackground(ViewParam.OTHELLO_WHITE);
 		
 	}
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	private void printBoard() {
+		int[][] board = gameController.sendBoard();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if ((board[j][i] & 1) == 1) {
+					if ((board[i][j] & 2) == 2) {
+						// white
+						buttons[j][i].setBackground(ViewParam.OTHELLO_WHITE);
+					} else {
+						// white
+						buttons[j][i].setBackground(ViewParam.OTHELLO_BLACK);
+					}
+				} else {
+					// not exist
+					buttons[j][i].setBackground(ViewParam.BOARD_COLOR);
+				}
+			}
+		}
 	}
 }
 

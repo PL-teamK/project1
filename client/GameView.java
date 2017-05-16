@@ -1,6 +1,7 @@
 // 作成者 吉瀬
 
 import javax.swing.*;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
 //画面遷移等をハンドルすることをメインに行う。
 
@@ -33,6 +34,12 @@ public class GameView extends JFrame{
 	Thread thread;
 	
 	public GameView(GameController gameController){
+		// macでの表示をwindowsでの表示に変える
+		try {
+			UIManager.setLookAndFeel(new MetalLookAndFeel());
+		} catch (UnsupportedLookAndFeelException e) {
+				
+		}
 		this.gameController = gameController;
 		
 		// 画面パネルの作成

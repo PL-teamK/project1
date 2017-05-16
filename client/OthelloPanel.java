@@ -65,3 +65,18 @@ public class OthelloPanel extends JPanel {
 		
 	}
 }
+
+class TimerLabel extends JLabel implements Runnable {
+	// 制限時間表示用のラベル
+	private String header = "<html>残り時間<br>";
+	private String footer = "</html>";
+	private String body = "";
+	
+	public TimerLabel() {
+		
+	}
+	
+	public void run() {
+		
+	}
+}

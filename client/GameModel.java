@@ -2,9 +2,9 @@
 
 public class GameModel{
 	
-	final static public int NONE = 0;
-	final static public int BLACK = 1;
-	final static public int WHITE = 2;
+	final static public int NONE = 0; 	//00
+	final static public int BLACK = 1; 	//01 
+	final static public int WHITE = 3;	//11
 	
 	private int[][] board = new int[8][8];
 	

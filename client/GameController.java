@@ -7,8 +7,9 @@ public class GameController {
 	GameModel gameModel;
 	public GameController() {
 		// ゲームビューとゲームモデルの生成を行う
-		gameView = new GameView(this);
 		gameModel = new GameModel();
+		gameView = new GameView(this);
+		
 	}
 	
 	public void sendPlayerName() {
@@ -18,6 +19,12 @@ public class GameController {
 	}
 	
 	public void setChosenPos(int x, int y) {
+		
+	}
+	
+	public int[][] sendBoard() {
+		int[][] board = gameModel.getBoard();
+		return board;
 		
 	}
 }
