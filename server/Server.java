@@ -18,7 +18,7 @@ public class Server {
     public static int thread_number = 0;                                            //スレッド識別番号
     public ArrayList<EchoThread> room_thread_array = new ArrayList<EchoThread>();            //各接続状況配列
     public static int room_status[] = new int[6];                                   //現在のルーム状況配列
-    public static int rt_num[][] = new int[5][1000];
+    public static int rt_num[][] = new int[6][1000];
 
 
     public Server(int port) {
@@ -86,6 +86,7 @@ public class Server {
         //データ受信用メソッド
         public void run() {
             int partner = 0;
+            int first_player = 0;
             try {
                 String line;
                 while (true) {
@@ -104,13 +105,14 @@ public class Server {
                             rt_num[room_num][th_num] = 1;
                             //対戦相手が見つかるまで待機
                             if(room_status[room_num] == 1){
+                                first_player = 1;
                                 while(true){
                                     room_thread_array.get(th_num).sleep(1000);
                                     if(room_status[room_num] >= 2) {
                                         System.out.println("BREAK!");
                                         room_status[room_num] = 0;
-                                       break;
-                                   }
+                                        break;
+                                    }
                                 }
 
                             }
@@ -120,7 +122,15 @@ public class Server {
 
                                 if(rt_num[room_num][i] == 1 && i != th_num){
                                     partner = i;
-                                    String st = "Find the player! Game Start!";
+                                    String st;
+                                    if(first_player == 1) {
+                                        //先手の時、相手にWhiteと送る
+                                        st = "Find the player... You are White!  Game Start!";
+                                    }else{
+                                        //後手の時、相手にBlackと送る
+                                        st = "Find the player... You are Black!  Game Start!";
+
+                                    }
                                     room_thread_array.get(partner).toMessage(st);
                                     break;
                                 }
@@ -171,5 +181,3 @@ public class Server {
         server.acceptClient();
     }
 }
-
-
