@@ -18,6 +18,7 @@ public class GameView extends JFrame{
 	
 	// 各種値
 	private String playerName = "";
+	private String opponentName = "";
 	private int playerColor = GameModel.BLACK;
 	private int roomNum;
 	
@@ -94,12 +95,16 @@ public class GameView extends JFrame{
 		chooseRoomPanel.setVisible(false);
 		matchingPanel.setVisible(true);
 		
-		gameController.sendPlayerNameAndRoom(playerName, roomNum);
+		
 		
 		
 		// 待機の間、文字列を変化させ続ける。
 		thread = new Thread(matchingPanel);
 		thread.start();
+		// 待機状態に入ったあとに接続待ち状態に入る．
+		gameController.sendPlayerNameAndRoom(playerName, roomNum);
+		
+		gameController.startCommunication();
 		
 		
 	}
@@ -118,12 +123,25 @@ public class GameView extends JFrame{
 		resultPanel.setVisible(true);
 	}
 	
+	public OthelloPanel getOthelloPanel() {
+		return othelloPanel;
+	}
+	
 	public void setPlayerName(String arg) {
 		playerName = arg;
 	}
 	
+	public void setOpponentName(String arg) {
+		opponentName = arg;
+	}
+	
 	public void setPlayerColor(int arg) {
 		playerColor = arg;
+		if (playerColor == GameModel.BLACK) {
+			othelloPanel.setIsMyTurn(true);
+		} else {
+			othelloPanel.setIsMyTurn(false);
+		}
 	}
 	
 	public int getPlayerColor() {

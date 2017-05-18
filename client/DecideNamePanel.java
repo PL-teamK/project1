@@ -39,7 +39,6 @@ public class DecideNamePanel extends JPanel {
 				gameView.setPlayerName(playerName);
 				
 				// ルーム決定の際にプレイヤー名とルーム種別を送るようにする
-				
 				// 画面遷移
 				gameView.switchViewToChooseRoom();
 			}

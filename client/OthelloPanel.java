@@ -54,7 +54,7 @@ public class OthelloPanel extends JPanel {
 		add(opponentLabel);
 		add(playerLabel);
 		
-		// 再描画テスト用
+		// ハイライト設定用
 		JButton testButton = new JButton("ハイライトをOFFにする");
 		testButton.addActionListener(e -> {
 			if (highlightFlag) {
@@ -67,7 +67,7 @@ public class OthelloPanel extends JPanel {
 				testButton.setText("ハイライトをONにする");
 			}
 		});
-		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 20, ViewParam.HEIGHT / 20);
+		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 10, ViewParam.HEIGHT / 10);
 		add(testButton);
 		
 		
@@ -77,6 +77,7 @@ public class OthelloPanel extends JPanel {
 		
 	}
 	
+	// このメソッドもsetIsMyTurn()に統合できるね
 	public void myTurn() {
 		((BoardPanel) boardPanel).changeButtonsStateTo(true);
 		((BoardPanel) boardPanel).printBoard();
@@ -87,7 +88,19 @@ public class OthelloPanel extends JPanel {
 	}
 	
 	public void setIsMyTurn(boolean bool) {
+		// 手番が変化する度に呼び出される．
 		isMyTurn = bool;
+		// isMyTurnがtrueならボタンを有効にして，falseなら無効にする．
+		((BoardPanel) boardPanel).changeButtonsStateTo(isMyTurn);
+		// 画面表示
+		((BoardPanel) boardPanel).printBoard();
+		if (highlightFlag && isMyTurn) {
+			// ハイライト設定がしてあり，自分のターンであればハイライトを行う．
+			((BoardPanel) boardPanel).printHighlight();
+		} else {
+			// そうでない場合にはハイライトを消去する．
+			((BoardPanel) boardPanel).deleteHighlight();
+		}
 	}
 	
 	public boolean getIsMyTurn(boolean bool) {

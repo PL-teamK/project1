@@ -36,18 +36,23 @@ public class BoardPanel extends JPanel {
 				buttons[j][i].addActionListener(e -> {
 					//　クリックされるとgameControllerに選択された座標を送信する
 					String actionCmd = e.getActionCommand();
-					// ボタンとハイライトをオフにする
-					changeButtonsStateTo(false);
-					deleteHighlight();
+					
 					// Modelの盤面更新と送信
-					gameController.setChosenPos(actionCmd.charAt(0) - '0', actionCmd.charAt(1) - '0');
-					System.out.println((actionCmd.charAt(0) - '0') + " " + (actionCmd.charAt(1) - '0')); 
-					
+					// ボタンとハイライトをオフにする
 					// 更新したModelの盤面を取得
-					printBoard();
 					
-					// 相手の操作を待つ
-					gameController.waitOpponent();
+					
+					gameController.setChosenPos(actionCmd.charAt(0) - '0', actionCmd.charAt(1) - '0');
+					// 描画画面更新は盤面の更新後でなければならない．
+					othelloPanel.setIsMyTurn(false);
+					// 通信状態が悪いと，置いた座標の送信ができずに画面更新がとまる
+					// サーバーと接続した状態でテストする必要がある．
+					
+					
+					// 相手の操作を待つ(この間はボタンが押された処理が終わらないので廃止して，スレッド処理で相手を待つようにした
+					// gameControllerの通信フラグを変更して，通信待ち状態に移行する．
+					gameController.waitCom();
+					// waitCom()からはすぐに処理が返ってくるので，ボタン操作遅延を低減できる
 					
 				});
 				//buttons[j][i].setOpaque(true);
@@ -81,11 +86,12 @@ public class BoardPanel extends JPanel {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				// 全ての駒にアクセス
-				if ((board[j][i] & 1) == 1) {
-					if ((board[i][j] & 2) == 2) {
+				if (board[j][i] != GameModel.NONE) {
+					// 駒が置いてある
+					if (board[j][i] == GameModel.WHITE) {
 						// white
 						buttons[j][i].setBackground(ViewParam.OTHELLO_WHITE);
-					} else {
+					} else if (board[j][i] == GameModel.BLACK){
 						// black
 						buttons[j][i].setBackground(ViewParam.OTHELLO_BLACK);
 					}
