@@ -6,7 +6,7 @@
 import java.net.*;
 import java.io.*;
 
-class Clientsample {
+class Clientsample{
 
 
     Socket socket;
@@ -29,6 +29,7 @@ class Clientsample {
 
                 } catch (IOException e) {
                     System.err.println("ERROR: Data received error");
+                    System.exit(1);
                 }
 
             }
@@ -45,24 +46,21 @@ class Clientsample {
                 try {
                     //ルーム情報の作成、サーバへ送信する
                     if (select_room == 1) {
+                        String str;
+                
+                        
+                        System.out.print("input room number(0～5):");
                         select_room = 0;
-                        boolean check_num = false;
-                        do {
-
-                            System.out.print("input room number(0～5):");
-                            select_room = 0;
-                            BufferedReader input =
+                        BufferedReader input =
                                     new BufferedReader(new InputStreamReader(System.in));
-                            str = input.readLine();
-                            if(check_data(str) && Integer.parseInt(str) >= 0 && Integer.parseInt(str) <=5){
-                                check_num = true;
-                            }
-                        }while(!check_num);
+                        str = input.readLine();
+
 
                         //PrintWriter型のwriterに、ソケットの出力ストリームを渡す。(Auto Flush)
                         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
                         System.out.println("Send to server: " + str);
+                        System.out.println("Searching player...");
 
                         writer.println(str);
                         //PrintWriterがAutoFlushでない場合
@@ -76,7 +74,7 @@ class Clientsample {
                                     new BufferedReader(new InputStreamReader(System.in));
                             String str = input.readLine();
 
-                            //PrintWriter型のwriterに、ソケットの出力ストリームを渡す。(Auto Flush)
+                            //writerに、ソケットの出力ストリームを渡す。
                             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 
                             System.out.println("Send to server: " + str);
@@ -101,10 +99,21 @@ class Clientsample {
     public void connect_to_server() {
         try {
 
-            //アドレス情報を保持するsocketAddressを作成。
 
+            String server_addr;
+            //コンソール入力によりサーバのIPアドレスを取得
+            System.out.print("Input Server IP Address:");
+            BufferedReader input =
+                    new BufferedReader(new InputStreamReader(System.in));
+            server_addr = input.readLine();
+
+
+            InetAddress addr = InetAddress.getByName(server_addr);
+            //アドレス情報を保持するsocketAddressを作成。
             InetSocketAddress socketAddress =
-                    new InetSocketAddress("localhost", 10000);
+                    new InetSocketAddress(addr.getHostAddress(), 10000);
+            //第一引数が直接のIPアドレス指定、addr.getHostName(),addr.getHostAddress()どれでも接続可能なことを確認済み(自宅環境)
+
             //socketAddressの値に基づいて通信に使用するソケットを作成する。
 
             socket = new Socket();
@@ -115,7 +124,6 @@ class Clientsample {
             InetAddress inadr;
 
             //inadrにソケットの接続先アドレスを入れ、nullである場合には接続失敗と判断する。
-            //nullでなければ、接続確立している。
             if ((inadr = socket.getInetAddress()) != null) {
                 System.out.println("Connect to " + inadr);
             } else {
@@ -133,14 +141,8 @@ class Clientsample {
     }
 
 
-
-    public boolean check_data(String data){
-        try{
-            Integer.parseInt(data);
-            return true;
-        }catch(NumberFormatException e){
-            return false;
-        }
+    public void check_data(String data){
+       //未実装
     }
 
     public static void main(String[] args) {
