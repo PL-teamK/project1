@@ -2,17 +2,15 @@
  * Created by SEIYA on 2017/04/26.
  */
 
+import java.io.*;
 import java.net.Socket;
 import java.net.ServerSocket;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
 
-public class Server {
+public class Server{
+
 
     public static final int ECHO_PORT = 10000;                                      //接続ポート
     public static int thread_number = 0;                                            //スレッド識別番号
@@ -64,8 +62,8 @@ public class Server {
         private Socket socket;
         private BufferedReader in;          //受信用データ変数
         public PrintWriter out;             //送信用データ変数
-        private  int room_select_num = 1;   //ルーム選択情報を識別するための変数
         private int th_num;                 //スレッド識別番号
+        private String player_name;         //プレイヤー名を格納
 
         //EchoThreadコンストラクタ
         public EchoThread(Socket socket, int thread_num) {
@@ -76,10 +74,11 @@ public class Server {
                 System.out.println("Connected! "
                         + socket.getRemoteSocketAddress());
                 in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
 
 
             } catch (IOException e) {
-                System.err.println("ERROR:Data received error");
+                System.err.println("ERROR:Data received/send error");
             }
         }
 
@@ -87,21 +86,26 @@ public class Server {
         public void run() {
             int partner = 0;
             int first_player = 0;
+
+
             try {
                 String line;
+                String[] str;
                 while (true) {
                     while ((line = in.readLine()) != null) {
                         System.out.println(socket.getRemoteSocketAddress()
                                 + " Receive: " + line);
-                        //クライアントからの最初の送信データはル-ム番号
-                        if(room_select_num == 1){
+
+                        str = line.split(",");
+                        //識別文字がloginならプレイヤ名とルーム番号
+                        if(str[0].equals("login")){
                             System.out.println("making room...");
-                            int room_num = Integer.parseInt(line);
+                            int room_num = Integer.parseInt(str[2]);
+                            player_name = str[1];
                             room_status[room_num] += 1;
                             for(int i = 0 ; i<6 ; i++) {
                                 System.out.print(room_status[i] + " ");
                             }
-                            room_select_num -= 1;
                             rt_num[room_num][th_num] = 1;
                             //対戦相手が見つかるまで待機
                             if(room_status[room_num] == 1){
@@ -120,24 +124,30 @@ public class Server {
                             int i = 0;
                             while(true){
 
+                                if(i == 1000){
+                                    i=0;
+                                }
                                 if(rt_num[room_num][i] == 1 && i != th_num){
                                     partner = i;
                                     String st;
+
                                     if(first_player == 1) {
                                         //先手の時、相手にWhiteと送る
-                                        st = "Find the player... You are White!  Game Start!";
+                                        st = "Find the player...Opponent name " + player_name +" ;) You are White! Game Start!";
                                     }else{
                                         //後手の時、相手にBlackと送る
-                                        st = "Find the player... You are Black!  Game Start!";
+                                        st = "Find the player...Opponent name " + player_name +" ;) You are Black!  Game Start!";
 
                                     }
                                     room_thread_array.get(partner).toMessage(st);
+                                    rt_num[room_num][i] = 0;
+
                                     break;
                                 }
                                 i++;
                             }
                         }else {
-                            //対戦相手のスレッドの送信メソッドを呼び出す
+                            //対戦相手のスレッドの送信メソッドを呼び出し、データを送信する
                             room_thread_array.get(partner).toMessage(line);
                         }
                         System.out.println(socket.getRemoteSocketAddress()
@@ -155,6 +165,7 @@ public class Server {
                     }
                 } catch (IOException e) {
                 }
+                room_thread_array.get(partner).toMessage("Disconnected " + player_name);
                 System.out.println("disconnected "
                         + socket.getRemoteSocketAddress());
             }
@@ -162,12 +173,7 @@ public class Server {
 
         //データ送信用メソッド
         public void toMessage(String msg) {
-            try {
-                out = new PrintWriter(socket.getOutputStream(), true);
                 out.println(msg);
-            } catch (IOException e) {
-                System.err.println("ERROR:Data sent error");
-            }
         }
 
     }
