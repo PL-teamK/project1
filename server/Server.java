@@ -21,7 +21,7 @@ public class Server{
 
     public Server(int port) {
         //Serverコンストラクタ未実装
-
+    	acceptClient();
 
     }
 
@@ -133,10 +133,10 @@ public class Server{
 
                                     if(first_player == 1) {
                                         //先手の時、相手にWhiteと送る
-                                        st = "Find the player...Opponent name " + player_name +" ;) You are White! Game Start!";
+                                        st = "start," + player_name + ",white";
                                     }else{
                                         //後手の時、相手にBlackと送る
-                                        st = "Find the player...Opponent name " + player_name +" ;) You are Black!  Game Start!";
+                                        st = "start," + player_name + ",black";
 
                                     }
                                     room_thread_array.get(partner).toMessage(st);
