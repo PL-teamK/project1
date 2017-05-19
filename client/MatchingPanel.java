@@ -21,7 +21,7 @@ public class MatchingPanel extends JPanel implements Runnable{
 		setLayout(null);
 		
 		// ラベルを設定
-		messageLabel = new JLabel("マッチング中(テストなので一定時間後に遷移します)");
+		messageLabel = new JLabel("マッチング中");
 		messageLabel.setBounds(ViewParam.WIDTH / 2 - messageLabelWidth / 2, ViewParam.HEIGHT * 4 / 5, messageLabelWidth, messageLabelHeight);
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 		
@@ -41,14 +41,14 @@ public class MatchingPanel extends JPanel implements Runnable{
 				Thread.sleep(500);
 				point = !point;
 				if (point) {
-					messageLabel.setText("マッチング中(テストなので一定時間後に遷移します).");
+					messageLabel.setText("マッチング中.");
 				} else {
-					messageLabel.setText("マッチング中(テストなので一定時間後に遷移します)");
+					messageLabel.setText("マッチング中");
 				}
-				count++;
-				if (count == 5) {
-					finishMatching();
-				}
+//				count++;
+//				if (count == 5) {
+//					finishMatching();
+//				}
 			} catch (InterruptedException e){
 				e.printStackTrace();
 			}

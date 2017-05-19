@@ -16,6 +16,7 @@ public class GameController implements Runnable {
 	private Thread thread;
 	// 通信待機状態を示すフラグ
 	private boolean comFlag = false;
+	private boolean gameNotComplete = true;
 	
 	// 通信関連
 	private String serverAddress = "";
@@ -24,11 +25,16 @@ public class GameController implements Runnable {
 	private BufferedReader bufReader;
 	
 	public GameController() {
+		gameInit();
+		//testStub = new TestStub(this);
+	}
+	
+	 public void gameInit() {
+		// このメソッドでゲームの初期化を行う．
 		// ゲームビューとゲームモデルの生成を行う
 		gameModel = new GameModel();
 		gameView = new GameView(this);
-		//testStub = new TestStub(this);
-	}
+	 }
 	
 	public void setServerAddress(String address) {
 		serverAddress = address;
@@ -70,7 +76,8 @@ public class GameController implements Runnable {
         	e.printStackTrace();
         }
         // ログイン内容を送信
-        String sendingMessage = "login," + "name" + "," + String.valueOf(room); 
+        String sendingMessage = "login," + gameView.getPlayerName() + "," + String.valueOf(room); 
+        System.out.println("send:" + sendingMessage);
         writer.println(sendingMessage);
         
         // サーバーからのデータ受信を行えるようにする．
@@ -92,6 +99,7 @@ public class GameController implements Runnable {
 		// サーバーに送信する．
 		// "put,1,4"のような形式で送信する．
 		String sendingMessage = "put," + x + "," + y;
+		System.out.println("send:" + sendingMessage);
 		writer.println(sendingMessage);
 	}
 	
@@ -114,7 +122,8 @@ public class GameController implements Runnable {
 	public void run() {
 		// 通信部分をスレッド処理にする．
 		// 相手からの通信を常時受け付けるような構造にする．
-		while (true) {
+		while (gameNotComplete) {
+			// gameNotCompleteはゲームで必要な処理が全て終了したタイミングで呼ばれる
 			// 無限ループで処理を受け付ける．
 			if (comFlag) {
 				// comFlagがtrueの時は通信待機状態である．
@@ -147,6 +156,8 @@ public class GameController implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		// デバック用
+		
 		// カンマ区切りで文字列を分割
 		tokens = recievedStr.split(",");
 		
@@ -159,6 +170,7 @@ public class GameController implements Runnable {
 			gameView.setOpponentName(opponentName);
 			// カラーをセットタイミングで初期手番が設定されている．
 			gameView.setPlayerColor(myColor);
+			gameView.getMatchingPanel().finishMatching();
 			
 			if (myColor == GameModel.WHITE) {
 				// 自分の手番が白だったら相手スタートなので，受信待機
@@ -166,7 +178,7 @@ public class GameController implements Runnable {
 			} else {
 				comFlag = false;
 			}
-		} else if (tokens[1].equals("put")) {
+		} else if (tokens[0].equals("put")) {
 			// 相手が駒を置いた場合
 			int x = Integer.parseInt(tokens[1]);
 			int y = Integer.parseInt(tokens[2]);
@@ -186,15 +198,17 @@ public class GameController implements Runnable {
 			}
 			
 			
-		} else if (tokens[1].equals("pass")) {
+		} else if (tokens[0].equals("pass")) {
 			// 相手がパスをした場合
 			isPassedFlag = true;
 			if (!canIPut()) {
 				// パスが2回連続で発生したので終了条件を満たす
 				gameView.switchViewToResult(countPieces());
 				// 終了を送信
+				System.out.println("send:finish");
 				writer.println("finish");
-				
+				// 通信の切断
+				gameComplete();
 			} else {
 				// まだ自分が置けるので継続
 				comFlag = false;
@@ -203,14 +217,22 @@ public class GameController implements Runnable {
 				gameView.getOthelloPanel().setIsMyTurn(true);
 			}
 			
-		} else if (tokens[1].equals("finish")) {
+		} else if (tokens[0].equals("finish")) {
 			// ゲームが終了した場合
 			// 普通に終了なので，コマ数計算して送信
 			gameView.switchViewToResult(countPieces());
-		} else if (tokens[1].equals("timeout")) {
+			// 通信を切断
+			gameComplete();
+		} else if (tokens[0].equals("timeout")) {
 			// 相手がタイムアウトになった場合
 			// もれなく勝ち
 			gameView.switchViewToResult(ResultPanel.FINISH_BY_OPPONENTS_TIMEOUT);
+			gameComplete();	
+		} else if (tokens[0].equals("disconnect")) {
+			// 相手の通信が切断された場合
+			gameView.switchViewToResult(ResultPanel.FINISH_BY_OPPONENTS_COM_FAILURE);
+			// 通信の終了
+			gameComplete();
 		}
 		
 		
@@ -259,5 +281,27 @@ public class GameController implements Runnable {
 	public void waitCom() {
 		// 通信待機状態に入るために，フラグ変数を変更する．
 		comFlag = true;
+	}
+	
+	public void sendTimeUpToServer() {
+		// このメソッドが呼ばれた時点でプレーヤの負けが確定する．System.out.println(recievedStr);
+		System.out.println("send:timeup");
+		writer.println("timeup");
+		gameView.switchViewToResult(ResultPanel.FINISH_BY_MY_TIMEOUT);
+		// もう相手からの通信は発生しないので通信を終了する．
+		gameComplete();
+	}
+	
+	public void gameComplete() {
+		// 通信処理を終了する．
+		// 処理待ち処理が終了する．(スレッド処理の終了)
+		gameNotComplete = false;
+		try {
+			// 通信切断
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }

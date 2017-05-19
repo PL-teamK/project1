@@ -111,7 +111,7 @@ public class GameView extends JFrame{
 	
 	public void switchViewToOthello() {
 		// 待機が終わったら、ゲーム画面への遷移を行う。
-		
+		othelloPanel.othelloPanelInit();
 		matchingPanel.setVisible(false);
 		othelloPanel.setVisible(true);
 	}
@@ -126,6 +126,10 @@ public class GameView extends JFrame{
 	
 	public OthelloPanel getOthelloPanel() {
 		return othelloPanel;
+	}
+	
+	public MatchingPanel getMatchingPanel() {
+		return matchingPanel;
 	}
 	
 	public void setPlayerName(String arg) {
@@ -159,6 +163,15 @@ public class GameView extends JFrame{
 	
 	public void setRoomNum(int arg) {
 		roomNum = arg;
+	}
+	
+	public int getRoomNum() {
+		return roomNum;
+	}
+	
+	public void timeUp() {
+		// 時間切れ時にOthelloPanel.java内のTimerLabelクラスから呼ばれる．
+		gameController.sendTimeUpToServer();
 	}
 	
 }
