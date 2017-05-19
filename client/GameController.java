@@ -75,10 +75,7 @@ public class GameController implements Runnable {
         } catch (IOException e) {
         	e.printStackTrace();
         }
-        // ログイン内容を送信
-        String sendingMessage = "login," + gameView.getPlayerName() + "," + String.valueOf(room); 
-        System.out.println("send:" + sendingMessage);
-        writer.println(sendingMessage);
+       
         
         // サーバーからのデータ受信を行えるようにする．
         try {
@@ -90,6 +87,11 @@ public class GameController implements Runnable {
         // 通信待ち状態に入る
         thread = new Thread(this);
         thread.start();
+        
+        // ログイン内容を送信
+        String sendingMessage = "login," + gameView.getPlayerName() + "," + String.valueOf(room); 
+        System.out.println("send:" + sendingMessage);
+        writer.println(sendingMessage);
 	}
 	
 	public void setChosenPos(int x, int y) {
@@ -125,7 +127,7 @@ public class GameController implements Runnable {
 		while (gameNotComplete) {
 			// gameNotCompleteはゲームで必要な処理が全て終了したタイミングで呼ばれる
 			// 無限ループで処理を受け付ける．
-			if (comFlag) {
+			if (/**comFlag*/true) {
 				// comFlagがtrueの時は通信待機状態である．
 				
 				// わすれないうちにフラグをfalseにする
@@ -157,7 +159,7 @@ public class GameController implements Runnable {
 			e.printStackTrace();
 		}
 		// デバック用
-		
+		System.out.println(recievedStr);
 		// カンマ区切りで文字列を分割
 		tokens = recievedStr.split(",");
 		

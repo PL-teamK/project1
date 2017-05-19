@@ -104,14 +104,14 @@ public class GameView extends JFrame{
 		// 待機状態に入ったあとに接続待ち状態に入る．
 		gameController.sendPlayerNameAndRoom(playerName, roomNum);
 		
-		gameController.startCommunication();
+		//gameController.startCommunication();
 		
 		
 	}
 	
 	public void switchViewToOthello() {
 		// 待機が終わったら、ゲーム画面への遷移を行う。
-		othelloPanel.othelloPanelInit();
+		// othelloPanel.othelloPanelInit();
 		matchingPanel.setVisible(false);
 		othelloPanel.setVisible(true);
 	}

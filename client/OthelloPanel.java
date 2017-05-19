@@ -35,7 +35,7 @@ public class OthelloPanel extends JPanel {
 		setLayout(null);
 		
 		
-		
+		othelloPanelInit();
 		
 		// ゲーム画面の設定
 		setSize(ViewParam.WIDTH, ViewParam.HEIGHT);
