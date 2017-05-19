@@ -19,12 +19,6 @@ public class Server{
     public static int rt_num[][] = new int[6][1000];
 
 
-    public Server(int port) {
-        //Serverコンストラクタ未実装
-    	acceptClient();
-
-    }
-
     //クライアントを受付メソッド
     public void acceptClient() {
         ServerSocket serverSocket = null;
@@ -165,7 +159,7 @@ public class Server{
                     }
                 } catch (IOException e) {
                 }
-                room_thread_array.get(partner).toMessage("Disconnected " + player_name);
+                room_thread_array.get(partner).toMessage("Disconnected");
                 System.out.println("disconnected "
                         + socket.getRemoteSocketAddress());
             }
@@ -183,7 +177,7 @@ public class Server{
     //クライアント受付メソッドを呼び出す
     public static void main(String args[]) {
 
-        Server server = new Server(ECHO_PORT);
+        Server server = new Server();
         server.acceptClient();
     }
 }
