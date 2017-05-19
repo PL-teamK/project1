@@ -8,12 +8,13 @@ public class ResultPanel extends JPanel {
 	private GameController gameController;
 	
 	// 定数たち
-	public static final int FINISH_BY_PASS_WIN = 0;
-	public static final int FINISH_BY_PASS_LOSE = 1;
-	public static final int FINISH_BY_MY_TIMEOUT = 2;
-	public static final int FINISH_BY_OPPONENTS_TIMEOUT = 3;
-	public static final int FINISH_BY_MY_COM_FAILURE = 4;
-	public static final int FINISH_BY_OPPONENTS_COM_FAILURE = 5;
+	public static final int FINISH_BY_PASS_WIN = 10;
+	public static final int FINISH_BY_PASS_LOSE = 11;
+	public static final int	FINISH_BY_PASS_DRAW = 12;
+	public static final int FINISH_BY_MY_TIMEOUT = 13;
+	public static final int FINISH_BY_OPPONENTS_TIMEOUT = 14;
+	public static final int FINISH_BY_MY_COM_FAILURE = 15;
+	public static final int FINISH_BY_OPPONENTS_COM_FAILURE =16;
 	
 	private JLabel resultLabel;
 	

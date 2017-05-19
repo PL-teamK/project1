@@ -116,9 +116,10 @@ public class GameView extends JFrame{
 		othelloPanel.setVisible(true);
 	}
 	
-	public void switchViewToResult() {
+	public void switchViewToResult(int reason) {
 		// ゲームが終了したら、リザルト画面への遷移を行う。
-		
+		// リザルト画面に終了事由の設定を行う．
+		resultPanel.setReason(reason);
 		othelloPanel.setVisible(false);
 		resultPanel.setVisible(true);
 	}
@@ -131,8 +132,16 @@ public class GameView extends JFrame{
 		playerName = arg;
 	}
 	
+	public String getPlayerName() {
+		return playerName;
+	}
+	
 	public void setOpponentName(String arg) {
 		opponentName = arg;
+	}
+	
+	public String getOpponentName() {
+		return opponentName;
 	}
 	
 	public void setPlayerColor(int arg) {

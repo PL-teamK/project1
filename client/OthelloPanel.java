@@ -14,10 +14,14 @@ public class OthelloPanel extends JPanel {
 	private int boardPanelWidth = ViewParam.HEIGHT * 8 / 10;
 	
 	// 盤面以外のコンポーネントの宣言
-	private JLabel opponentLabel;
-	private JLabel playerLabel;
+	private JLabel opponentNameLabel;
+	private JLabel playerNameLabel;
+	private TimerLabel opponentTimerLabel;
+	private TimerLabel playerTimerLabel;
+	private JLabel opponentPieceLabel;
+	private JLabel playerPieceLabel;
 	private int labelsWidth = ViewParam.WIDTH * 2 / 10;
-	private int labelsHeight = ViewParam.HEIGHT * 3 / 10;
+	private int labelsHeight = ViewParam.HEIGHT / 20;
 	
 	// 変数の宣言
 	private boolean highlightFlag = true;
@@ -38,21 +42,7 @@ public class OthelloPanel extends JPanel {
 		
 		add(boardPanel);
 		
-		// コンポーネントの定義
-		opponentLabel = new JLabel("<html>対戦相手名<br>制限時間: xx:xx<br>駒の数: xx枚</html>");
-		playerLabel = new JLabel("<html>プレイヤー名<br>制限時間: xx:xx<br>駒の数: xx枚</html>");
-		opponentLabel.setBounds(ViewParam.WIDTH * 17 / 20 - labelsWidth / 2, ViewParam.HEIGHT * 2 / 10 - labelsHeight / 2, labelsWidth, labelsHeight);
-		playerLabel.setBounds(ViewParam.WIDTH * 3 / 20 - labelsWidth / 2, ViewParam.HEIGHT * 8 / 10 - labelsHeight / 2, labelsWidth, labelsHeight);
-		opponentLabel.setHorizontalAlignment(JLabel.CENTER);
-		playerLabel.setHorizontalAlignment(JLabel.CENTER);
-		opponentLabel.setBackground(Color.MAGENTA);
-		playerLabel.setBackground(Color.BLUE);
-		opponentLabel.setOpaque(true);
-		playerLabel.setOpaque(true);
 		
-		// コンポーネントを画面に追加する。
-		add(opponentLabel);
-		add(playerLabel);
 		
 		// ハイライト設定用
 		JButton testButton = new JButton("ハイライトをOFFにする");
@@ -69,6 +59,18 @@ public class OthelloPanel extends JPanel {
 		});
 		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 10, ViewParam.HEIGHT / 10);
 		add(testButton);
+		
+		// 相手と自分のラベルを設定する．
+		opponentNameLabel = new JLabel(gameView.getOpponentName());
+		opponentNameLabel.setHorizontalAlignment(JLabel.CENTER);
+		opponentNameLabel.setBounds(ViewParam.WIDTH * 39 / 40 - labelsWidth, ViewParam.HEIGHT * 1 / 20, labelsWidth, labelsHeight);
+		add(opponentNameLabel);
+		playerNameLabel = new JLabel(gameView.getPlayerName());
+		playerNameLabel.setHorizontalAlignment(JLabel.CENTER);
+		playerNameLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 19 / 20 - labelsHeight, labelsWidth, labelsHeight);
+		add(playerNameLabel);
+		opponentPieceLabel = new JLabel("駒の数");
+		// 今書いてる
 		
 		
 		// ゲーム画面の設定

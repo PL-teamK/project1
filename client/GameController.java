@@ -18,6 +18,7 @@ public class GameController implements Runnable {
 	private boolean comFlag = false;
 	
 	// 通信関連
+	private String serverAddress = "";
 	private Socket socket;
 	private PrintWriter writer;
 	private BufferedReader bufReader;
@@ -27,6 +28,10 @@ public class GameController implements Runnable {
 		gameModel = new GameModel();
 		gameView = new GameView(this);
 		//testStub = new TestStub(this);
+	}
+	
+	public void setServerAddress(String address) {
+		serverAddress = address;
 	}
 	
 	public void sendPlayerNameAndRoom(String name, int room) {
@@ -177,19 +182,35 @@ public class GameController implements Runnable {
 			} else {
 				// 置ける場所がないのでパスになる．
 				comFlag = true;
-				
+				isPassedFlag = true;
 			}
 			
 			
 		} else if (tokens[1].equals("pass")) {
 			// 相手がパスをした場合
+			isPassedFlag = true;
+			if (!canIPut()) {
+				// パスが2回連続で発生したので終了条件を満たす
+				gameView.switchViewToResult(countPieces());
+				// 終了を送信
+				writer.println("finish");
+				
+			} else {
+				// まだ自分が置けるので継続
+				comFlag = false;
+				isPassedFlag = false;
+				// 自分の番に変更する．
+				gameView.getOthelloPanel().setIsMyTurn(true);
+			}
 			
 		} else if (tokens[1].equals("finish")) {
 			// ゲームが終了した場合
-			
+			// 普通に終了なので，コマ数計算して送信
+			gameView.switchViewToResult(countPieces());
 		} else if (tokens[1].equals("timeout")) {
 			// 相手がタイムアウトになった場合
-			
+			// もれなく勝ち
+			gameView.switchViewToResult(ResultPanel.FINISH_BY_OPPONENTS_TIMEOUT);
 		}
 		
 		
@@ -209,6 +230,30 @@ public class GameController implements Runnable {
 		}
 		// ここに到達した場合，置ける場所は存在しない．
 		return false;
+	}
+	
+	public int countPieces() {
+		// 勝敗を判定する．
+		int myColor = gameView.getPlayerColor();
+		int myNum = 0;
+		int opponentNum = 0;
+		
+		int board[][] = gameModel.getBoard();
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if (board[j][i] == myColor) {
+					myNum++;
+				} else {
+					opponentNum++;
+				}
+			}
+		}
+		if(myNum > opponentNum) {
+			return ResultPanel.FINISH_BY_PASS_WIN;
+		} else if (opponentNum > myNum) {
+			return ResultPanel.FINISH_BY_PASS_LOSE;
+		} 
+		return ResultPanel.FINISH_BY_PASS_DRAW;
 	}
 	
 	public void waitCom() {

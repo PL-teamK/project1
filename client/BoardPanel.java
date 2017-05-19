@@ -41,7 +41,8 @@ public class BoardPanel extends JPanel {
 					// ボタンとハイライトをオフにする
 					// 更新したModelの盤面を取得
 					
-					
+					// 選んだボタンのみ描画を行う(送信に時間がかかった場合に描画処理遅延を避けるため)
+					buttons[actionCmd.charAt(0) - '0'][actionCmd.charAt(1) - '0'].setBackground(gameView.getPlayerColor() == GameModel.BLACK ? ViewParam.OTHELLO_BLACK : ViewParam.OTHELLO_WHITE);
 					gameController.setChosenPos(actionCmd.charAt(0) - '0', actionCmd.charAt(1) - '0');
 					// 描画画面更新は盤面の更新後でなければならない．
 					othelloPanel.setIsMyTurn(false);

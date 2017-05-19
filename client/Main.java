@@ -4,7 +4,7 @@ public class Main{
 //		new TestDriver();
 		
 		// サーバーを最初に起動しないとだめ
-//		new Server(8080);
+		//new Server(8080);
 		new GameController();
 		
 //		new GameController();
