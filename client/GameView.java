@@ -66,6 +66,8 @@ public class GameView extends JFrame{
 		add(othelloPanel);
 		add(resultPanel);
 		
+		setBounds(100, 100, ViewParam.WIDTH, ViewParam.HEIGHT);
+		
 		setSize(ViewParam.WIDTH, ViewParam.HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);

@@ -219,9 +219,11 @@ class TimerLabel extends JLabel implements Runnable {
 		flag = bool;
 		// ルーム種別が1手ごとなら，更新する．
 		switch (room) {
-		case GameView.BY_HANDS_ROOM1: timeLimit = 10;
-		case GameView.BY_HANDS_ROOM2: timeLimit = 20;
-		case GameView.BY_HANDS_ROOM3: timeLimit = 30;
+		case GameView.BY_HANDS_ROOM1: timeLimit = 10;	break;
+		case GameView.BY_HANDS_ROOM2: timeLimit = 20;	break;
+		case GameView.BY_HANDS_ROOM3: timeLimit = 30;	break;
+		default: break;
+		
 		}
 	}
 }

@@ -185,7 +185,8 @@ public class GameController implements Runnable {
 			int x = Integer.parseInt(tokens[1]);
 			int y = Integer.parseInt(tokens[2]);
 			// model更新
-			gameModel.putPiece(gameView.getPlayerColor(), x, y);
+			int opponentColor = gameView.getPlayerColor() == GameModel.BLACK ? GameModel.WHITE : GameModel.BLACK;
+			gameModel.putPiece(opponentColor, x, y);
 			
 			// 置ける場所があるかを確認する.
 			if (canIPut()) {
@@ -197,6 +198,12 @@ public class GameController implements Runnable {
 				// 置ける場所がないのでパスになる．
 				comFlag = true;
 				isPassedFlag = true;
+				// 送信しなきゃ
+				writer.println("pass");
+				isPassedFlag = true;
+				
+				// 自分に手番回ってこないけど，更新しなきゃ
+				gameView.getOthelloPanel().setIsMyTurn(false);
 			}
 			
 			
