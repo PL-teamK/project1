@@ -35,7 +35,7 @@ public class OthelloPanel extends JPanel {
 		setLayout(null);
 		
 		
-		othelloPanelInit();
+		//othelloPanelInit();
 		
 		// ゲーム画面の設定
 		setSize(ViewParam.WIDTH, ViewParam.HEIGHT);
@@ -78,7 +78,7 @@ public class OthelloPanel extends JPanel {
 		add(opponentNameLabel);
 		playerNameLabel = new JLabel(gameView.getPlayerName());
 		playerNameLabel.setHorizontalAlignment(JLabel.CENTER);
-		playerNameLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 19 / 20 - labelsHeight, labelsWidth, labelsHeight);
+		playerNameLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 17 / 20 - labelsHeight, labelsWidth, labelsHeight);
 		add(playerNameLabel);
 		opponentPieceLabel = new JLabel("");
 		opponentPieceLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -91,10 +91,10 @@ public class OthelloPanel extends JPanel {
 		opponentTimerLabel = new TimerLabel(gameView, gameView.getRoomNum(), false);
 		opponentTimerLabel.setHorizontalAlignment(JLabel.CENTER);
 		opponentTimerLabel.setBounds(ViewParam.WIDTH * 39 / 40 - labelsWidth, ViewParam.HEIGHT * 3 / 20, labelsWidth, labelsHeight);
-		add(playerPieceLabel);
+		add(opponentTimerLabel);
 		playerTimerLabel = new TimerLabel(gameView, gameView.getRoomNum(), true);
 		playerTimerLabel.setHorizontalAlignment(JLabel.CENTER);
-		playerTimerLabel.setBounds(ViewParam.WIDTH / 40, ViewParam.HEIGHT * 19 / 20 - labelsHeight, labelsWidth, labelsHeight);
+		playerTimerLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 19 / 20 - labelsHeight, labelsWidth, labelsHeight);
 		add(playerTimerLabel);		
 	}
 	
@@ -200,8 +200,9 @@ class TimerLabel extends JLabel implements Runnable {
 			}
 			if (flag) {
 				timeLimit--;
-				int minute = timeLimit / 60;
 				int seconds = timeLimit % 60;
+				int minute = (timeLimit - seconds) / 60;
+				
 				body = minute + ":" + seconds;
 				setText(header + body);
 			}

@@ -113,7 +113,7 @@ public class GameView extends JFrame{
 	
 	public void switchViewToOthello() {
 		// 待機が終わったら、ゲーム画面への遷移を行う。
-		// othelloPanel.othelloPanelInit();
+		//othelloPanel.othelloPanelInit();
 		matchingPanel.setVisible(false);
 		othelloPanel.setVisible(true);
 	}
@@ -152,6 +152,7 @@ public class GameView extends JFrame{
 	
 	public void setPlayerColor(int arg) {
 		playerColor = arg;
+		othelloPanel.othelloPanelInit();
 		if (playerColor == GameModel.BLACK) {
 			othelloPanel.setIsMyTurn(true);
 		} else {

@@ -28,6 +28,11 @@ public class ResultPanel extends JPanel {
 
 		// 座標で位置を指定するためにレイアウトマネージャを無効にする。
 		setLayout(null);
+		
+		resultLabel.setBounds(ViewParam.WIDTH * 3 / 10,ViewParam.HEIGHT * 9 / 10 , ViewParam.WIDTH * 4 / 10, ViewParam.HEIGHT * 1 / 20);
+		// ラベルの追加
+		add(resultLabel);
+		add(resultImage);
 	}
 	
 	public void setReason(int reason) {
@@ -35,15 +40,20 @@ public class ResultPanel extends JPanel {
 		switch (reason) {
 		// 終了理由別に処理分岐
 		case FINISH_BY_PASS_WIN:
-			resultLabel.setText("配置できるマスがないため、あなたの勝ちです");
+			resultLabel.setText("あなたの勝ちです");
 			//resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 			break;
 		case FINISH_BY_PASS_LOSE:
-			resultLabel.setText("配置できるマスがないため、あなたの負けです");
+			resultLabel.setText("あなたの負けです");
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
 
             break;
+            
+		case FINISH_BY_PASS_DRAW:
+			resultLabel.setText("引き分けです");
+			// resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
+			break;
 		case FINISH_BY_MY_TIMEOUT:
 			resultLabel.setText("制限時間を超えたため、あなたの負けです");
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
@@ -68,8 +78,8 @@ public class ResultPanel extends JPanel {
 		}
         //resultLabel.setBounds();  ラベルの位置指定
         //resultImage.setBounds();
-        add(resultLabel);
-		add(resultImage);
+//        add(resultLabel);
+//		add(resultImage);
 
 
 	}

@@ -218,6 +218,9 @@ public class GameController implements Runnable {
 				writer.println("finish");
 				// 通信の切断
 				gameComplete();
+				// 画面遷移をする
+				// 駒数のカウントし、勝敗の判定を行う
+				gameView.switchViewToResult(countPieces());
 			} else {
 				// まだ自分が置けるので継続
 				comFlag = false;

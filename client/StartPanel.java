@@ -33,7 +33,7 @@ public class StartPanel extends JPanel {
 		serverField.setHorizontalAlignment(JTextField.CENTER);
 		
 		
-		startButton = new JButton("click to start");
+		startButton = new JButton("サーバのipアドレスを入力してスタート");
 		startButton.setBounds((ViewParam.WIDTH - startButtonWidth) / 2, ViewParam.HEIGHT * 6 / 7 - startButtonHeight , startButtonWidth, startButtonHeight);
 		startButton.addActionListener(e -> {
 			String serverAddress = serverField.getText();
