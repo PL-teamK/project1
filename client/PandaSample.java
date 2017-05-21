@@ -32,9 +32,13 @@ import java.util.Random;
 public class PandaSample{
 
 
-    public ImageIcon[] image = new ImageIcon[45];
-    public ImageIcon[] gif = new ImageIcon[2];
-    public AudioClip[] sounds = new AudioClip[5];
+	private static final int MAX_IMAGE_NUM = 45;
+	private static final int MAX_GIF_NUM = 2;
+	private static final int MAX_SOUND_NUM = 45;
+
+    public ImageIcon[] image = new ImageIcon[MAX_FILE_NUM];
+    public ImageIcon[] gif = new ImageIcon[MAX_GIF_NUM];
+    public AudioClip[] sounds = new AudioClip[MAX_SOUND_NUM];
     private int send_num;
     private int situation = -1;  //0:自分が勝っている状態  1:負けている状態   2:引き分けの状態
 
