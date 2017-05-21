@@ -30,6 +30,7 @@ public class ResultPanel extends JPanel {
 		setLayout(null);
 		
 		resultLabel.setBounds(ViewParam.WIDTH * 3 / 10,ViewParam.HEIGHT * 9 / 10 , ViewParam.WIDTH * 4 / 10, ViewParam.HEIGHT * 1 / 20);
+		resultLabel.setHorizontalAlignment(JLabel.CENTER);
 		// ラベルの追加
 		add(resultLabel);
 		add(resultImage);

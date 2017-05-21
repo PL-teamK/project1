@@ -65,10 +65,10 @@ public class OthelloPanel extends JPanel {
 				
 			} else {
 				highlightFlag = true;
-				testButton.setText("ハイライトをONにする");
+				testButton.setText("ハイライトをOFFにする");
 			}
 		});
-		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 10, ViewParam.HEIGHT / 10);
+		testButton.setBounds(ViewParam.WIDTH / 30, ViewParam.HEIGHT / 30, ViewParam.WIDTH / 5, ViewParam.HEIGHT / 10);
 		add(testButton);
 				
 		// 相手と自分のラベルを設定する．

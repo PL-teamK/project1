@@ -235,7 +235,7 @@ public class GameController implements Runnable {
 			gameView.switchViewToResult(countPieces());
 			// 通信を切断
 			gameComplete();
-		} else if (tokens[0].equals("timeout")) {
+		} else if (tokens[0].equals("timeup")) {
 			// 相手がタイムアウトになった場合
 			// もれなく勝ち
 			gameView.switchViewToResult(ResultPanel.FINISH_BY_OPPONENTS_TIMEOUT);
