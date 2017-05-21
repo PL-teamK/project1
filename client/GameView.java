@@ -34,6 +34,10 @@ public class GameView extends JFrame{
 	// スレッド処理用のスレッドクラスの変数
 	Thread thread;
 	
+	// パンダクラス
+	// getPanda()でアクセスできる
+	private PandaSample panda;
+	
 	public GameView(GameController gameController){
 		// macでの表示をwindowsでの表示に変える
 		try {
@@ -42,6 +46,9 @@ public class GameView extends JFrame{
 				
 		}
 		this.gameController = gameController;
+		
+		// パンダインスタンスの生成
+		panda = new PandaSample();
 		
 		// 画面パネルの作成
 		startPanel 		= new StartPanel(this, gameController);
@@ -175,6 +182,11 @@ public class GameView extends JFrame{
 	public void timeUp() {
 		// 時間切れ時にOthelloPanel.java内のTimerLabelクラスから呼ばれる．
 		gameController.sendTimeUpToServer();
+	}
+	
+	public PandaSample getPanda() {
+		// パンダインスタンスのgetter
+		return panda;
 	}
 	
 }
