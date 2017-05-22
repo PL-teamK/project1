@@ -22,7 +22,7 @@ public class ResultPanel extends JPanel {
 	private int imageWidth = ViewParam.WIDTH;
 	private int imageHeight = ViewParam.HEIGHT * 4 / 5;
 	
-	private int restartWidth = ViewParam.WIDTH * 1 / 10;
+	private int restartWidth = ViewParam.WIDTH * 3 / 10;
 	private int restartHeight = ViewParam.HEIGHT * 1 / 10;
 	private JButton restartButton;
 	

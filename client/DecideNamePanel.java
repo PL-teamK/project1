@@ -11,7 +11,7 @@ public class DecideNamePanel extends JPanel {
 	private int nameFieldWidth = ViewParam.WIDTH / 4;
 	private int nameFieldHeight = 30;
 	private JButton decideButton;
-	private int decideButtonWidth = ViewParam.WIDTH / 10;
+	private int decideButtonWidth = ViewParam.WIDTH * 4 / 10;
 	private int decideButtonHeight = ViewParam.HEIGHT / 10;
 	
 	private JLabel imageLabel;
