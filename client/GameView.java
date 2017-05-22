@@ -48,7 +48,7 @@ public class GameView extends JFrame{
 		this.gameController = gameController;
 		
 		// パンダインスタンスの生成
-		panda = new PandaSample();
+		//panda = new PandaSample();
 		
 		// 画面パネルの作成
 		startPanel 		= new StartPanel(this, gameController);
@@ -187,6 +187,38 @@ public class GameView extends JFrame{
 	public PandaSample getPanda() {
 		// パンダインスタンスのgetter
 		return panda;
+	}
+	
+	public void	resetView() {
+		// 最初に画面を非表示にして、
+		resultPanel.setVisible(false);
+		
+		playerName = "";
+		opponentName = "";
+		
+		// 画面パネルの作成
+		startPanel 		= new StartPanel(this, gameController);
+		decideNamePanel = new DecideNamePanel(this, gameController);
+		chooseRoomPanel = new ChooseRoomPanel(this, gameController);
+		matchingPanel 	= new MatchingPanel(this, gameController);
+		othelloPanel	= new OthelloPanel(this, gameController);
+		resultPanel		= new ResultPanel(this, gameController);
+			
+		// 最初は、スタート画面を表示する。
+		startPanel.setVisible(true);
+		decideNamePanel.setVisible(false);
+		chooseRoomPanel.setVisible(false);
+		matchingPanel.setVisible(false);
+		othelloPanel.setVisible(false);
+		resultPanel.setVisible(false);
+				
+		add(startPanel);
+		add(decideNamePanel);
+		add(chooseRoomPanel);
+		add(matchingPanel);
+		add(othelloPanel);
+		add(resultPanel);
+		
 	}
 	
 }

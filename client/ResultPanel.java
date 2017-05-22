@@ -2,6 +2,7 @@
 // 勝敗結果表示画面
 
 import javax.swing.*;
+import java.awt.event.*;
 
 public class ResultPanel extends JPanel {
 	private GameView gameView;
@@ -19,6 +20,10 @@ public class ResultPanel extends JPanel {
 	private JLabel resultLabel;
 	private JLabel resultImage;
 	
+	private int restartWidth = ViewParam.WIDTH * 1 / 10;
+	private int restartHeight = ViewParam.HEIGHT * 1 / 10;
+	private JButton restartButton;
+	
 	public ResultPanel(GameView gameview, GameController gameController) {
 		this.gameView = gameview;
 		this.gameController = gameController;
@@ -34,6 +39,15 @@ public class ResultPanel extends JPanel {
 		// ラベルの追加
 		add(resultLabel);
 		add(resultImage);
+		
+		// 再起動ボタンを作成する。
+		restartButton = new JButton("タイトルへ戻る");
+		restartButton.setBounds(ViewParam.WIDTH * 7 / 10, ViewParam.HEIGHT * 8 / 10, restartWidth, restartHeight);
+		restartButton.addActionListener(e -> {
+			gameController.resetController();
+			gameView.resetView();
+		});
+		add(restartButton);
 	}
 	
 	public void setReason(int reason) {

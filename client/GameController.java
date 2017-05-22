@@ -9,7 +9,7 @@ public class GameController implements Runnable {
 	private GameView gameView;
 	private GameModel gameModel;
 	// サーバーの向こう側を想定したスタブでテストを行う
-	private TestStub testStub;
+	// private TestStub testStub;
 	private boolean isPassedFlag = false;
 	
 	// 通信部分をスレッド処理にするためのスレッド
@@ -315,5 +315,14 @@ public class GameController implements Runnable {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void resetController() {
+		// 再度タイトル画面に戻ってゲームを行うための処理
+		gameModel = new GameModel();
+		isPassedFlag = false;
+		comFlag = false;
+		gameNotComplete = true;
+		serverAddress = "";
 	}
 }
