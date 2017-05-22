@@ -19,6 +19,8 @@ public class ResultPanel extends JPanel {
 	
 	private JLabel resultLabel;
 	private JLabel resultImage;
+	private int imageWidth = ViewParam.WIDTH;
+	private int imageHeight = ViewParam.HEIGHT * 4 / 5;
 	
 	private int restartWidth = ViewParam.WIDTH * 1 / 10;
 	private int restartHeight = ViewParam.HEIGHT * 1 / 10;
@@ -30,6 +32,14 @@ public class ResultPanel extends JPanel {
 		
 		resultLabel = new JLabel();
 		resultImage = new JLabel();
+		
+		// イメージの作成
+		resultImage = new JLabel();
+		resultImage.setOpaque(false);
+		resultImage.setHorizontalAlignment(JLabel.CENTER);
+		resultImage.setVerticalAlignment(JLabel.TOP);
+		resultImage.setBounds(0, 0, imageWidth, imageHeight);
+		add(resultImage);
 
 		// 座標で位置を指定するためにレイアウトマネージャを無効にする。
 		setLayout(null);
@@ -56,10 +66,11 @@ public class ResultPanel extends JPanel {
 		// 終了理由別に処理分岐
 		case FINISH_BY_PASS_WIN:
 			resultLabel.setText("あなたの勝ちです");
-			//resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
+			resultImage.setIcon(gameView.getPanda().resultPanda(0));
 			break;
 		case FINISH_BY_PASS_LOSE:
 			resultLabel.setText("あなたの負けです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(1));
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
 
@@ -67,25 +78,30 @@ public class ResultPanel extends JPanel {
             
 		case FINISH_BY_PASS_DRAW:
 			resultLabel.setText("引き分けです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(2));
 			// resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 			break;
 		case FINISH_BY_MY_TIMEOUT:
 			resultLabel.setText("制限時間を超えたため、あなたの負けです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(1));
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
             break;
 		case FINISH_BY_OPPONENTS_TIMEOUT:
 			resultLabel.setText("対戦相手が制限時間を超えたため、あなたの勝ちです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(0));
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
             break;
 		case FINISH_BY_MY_COM_FAILURE:
 			resultLabel.setText("接続が切れたため、あなたの負けです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(1));
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
             break;
 		case FINISH_BY_OPPONENTS_COM_FAILURE:
 			resultLabel.setText("対戦相手の接続が切れたため、あなたの勝ちです");
+			resultImage.setIcon(gameView.getPanda().resultPanda(0));
             //resultImage.setIcon(対応するパンダメソッド);メソッドの戻り値はImageIconクラスの変数
 
             break;

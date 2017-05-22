@@ -191,7 +191,14 @@ public class PandaSample{
 
     //音声を再生する
     public void soundplay(){
-        sounds[send_num].play();
+    	try {
+    		sounds[send_num].play();
+    	} catch (NullPointerException npe) {
+    		System.err.println(send_num);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+        
     }
 
 }
