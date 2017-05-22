@@ -36,7 +36,7 @@ public class PandaSample{
 	private static final int MAX_GIF_NUM = 2;
 	private static final int MAX_SOUND_NUM = 45;
 
-    public ImageIcon[] image = new ImageIcon[MAX_FILE_NUM];
+    public ImageIcon[] image = new ImageIcon[MAX_IMAGE_NUM];
     public ImageIcon[] gif = new ImageIcon[MAX_GIF_NUM];
     public AudioClip[] sounds = new AudioClip[MAX_SOUND_NUM];
     private int send_num;
@@ -51,11 +51,13 @@ public class PandaSample{
         image[1] = new ImageIcon("./Image/menu/roomSelect.jpg");
         for(int i = 2;i < 42; i++){
             int filenum = i - 2;    //画像ファイルはp0.jpgからp39.jpg
+            //System.out.println(i);
             String filepath = "./Image/matching/p" + filenum + ".jpg";
             image[i] = new ImageIcon((filepath));
 
             //マッチング中の音声も同時に読み込む
-            sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
+            System.out.println("./Sounds/matching/m"+ filenum +".aiff");
+            //sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
         }
         image[42] = new ImageIcon("./Image/result/win.jpg");
         image[43] = new ImageIcon("./Image/result/lose.jpg");

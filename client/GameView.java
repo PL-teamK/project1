@@ -48,7 +48,7 @@ public class GameView extends JFrame{
 		this.gameController = gameController;
 		
 		// パンダインスタンスの生成
-		//panda = new PandaSample();
+		panda = new PandaSample();
 		
 		// 画面パネルの作成
 		startPanel 		= new StartPanel(this, gameController);
