@@ -58,7 +58,7 @@ public class PandaSample{
             image[i] = new ImageIcon((filepath));
 
             //マッチング中の音声も同時に読み込む
-            System.out.println("./Sounds/matching/m"+ filenum +".aiff");
+            //System.out.println("./Sounds/matching/m"+ filenum +".aiff");
             sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
         }
         image[42] = new ImageIcon("./Image/result/win.jpg");
