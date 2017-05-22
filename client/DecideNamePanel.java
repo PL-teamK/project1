@@ -14,6 +14,10 @@ public class DecideNamePanel extends JPanel {
 	private int decideButtonWidth = ViewParam.WIDTH / 10;
 	private int decideButtonHeight = ViewParam.HEIGHT / 10;
 	
+	private JLabel imageLabel;
+	private int imageWidth = ViewParam.WIDTH;
+	private int imageHeight = ViewParam.HEIGHT * 14 / 20;
+	
 	public DecideNamePanel(GameView gameview, GameController gameController) {
 		this.gameView = gameview;
 		this.gameController = gameController;
@@ -21,15 +25,21 @@ public class DecideNamePanel extends JPanel {
 		// レイアウトマネージャをオフにする
 		setLayout(null);
 		
+		// イメージ
+		imageLabel = new JLabel();
+		imageLabel.setOpaque(false);
+		imageLabel.setIcon(gameView.getPanda().usernamePanda());
+		imageLabel.setBounds(0, 0, imageWidth, imageHeight);
+		add(imageLabel);
 		// 入力欄の作成
 		nameField = new JTextField(16);
-		nameField.setBounds((ViewParam.WIDTH - nameFieldWidth) / 2, ViewParam.HEIGHT / 2, nameFieldWidth, nameFieldHeight);
+		nameField.setBounds((ViewParam.WIDTH - nameFieldWidth) / 2, ViewParam.HEIGHT * 14 / 20, nameFieldWidth, nameFieldHeight);
 		nameField.setHorizontalAlignment(JTextField.CENTER);
 		
 		// 決定ボタンの作成
 		decideButton = new JButton("名前を入力してください");
 		decideButton.setEnabled(true);
-		decideButton.setBounds(ViewParam.WIDTH / 2 - decideButtonWidth / 2, ViewParam.HEIGHT * 4 / 7, decideButtonWidth, decideButtonHeight);
+		decideButton.setBounds(ViewParam.WIDTH / 2 - decideButtonWidth / 2, ViewParam.HEIGHT * 16 / 20, decideButtonWidth, decideButtonHeight);
 		decideButton.addActionListener(e -> {
 			// ボタンが押された時の処理を記述する。
 			String playerName = nameField.getText();

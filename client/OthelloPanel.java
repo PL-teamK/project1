@@ -30,7 +30,7 @@ public class OthelloPanel extends JPanel {
 	// パンダ用ラベルを用意する。
 	private JLabel pandaLabel;
 	private int pandaWidth = ViewParam.WIDTH * 1 / 4 - 10;
-	private int pandaHeight = ViewParam.HEIGHT * 1 / 2;
+	private int pandaHeight = ViewParam.HEIGHT - 10;
 	
 	
 	public OthelloPanel(GameView gameview, GameController gameController) {
@@ -77,17 +77,17 @@ public class OthelloPanel extends JPanel {
 		add(testButton);
 				
 		// 相手と自分のラベルを設定する．
-		opponentNameLabel = new JLabel(gameView.getOpponentName());
+		opponentNameLabel = new JLabel("相手 :" + gameView.getOpponentName());
 		opponentNameLabel.setHorizontalAlignment(JLabel.CENTER);
-		opponentNameLabel.setBounds(ViewParam.WIDTH * 39 / 40 - labelsWidth, ViewParam.HEIGHT * 1 / 20, labelsWidth, labelsHeight);
+		opponentNameLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 4 / 20, labelsWidth, labelsHeight);
 		add(opponentNameLabel);
-		playerNameLabel = new JLabel(gameView.getPlayerName());
+		playerNameLabel = new JLabel("自分: " + gameView.getPlayerName());
 		playerNameLabel.setHorizontalAlignment(JLabel.CENTER);
 		playerNameLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 17 / 20 - labelsHeight, labelsWidth, labelsHeight);
 		add(playerNameLabel);
 		opponentPieceLabel = new JLabel("");
 		opponentPieceLabel.setHorizontalAlignment(JLabel.CENTER);
-		opponentPieceLabel.setBounds(ViewParam.WIDTH * 39 / 40 - labelsWidth, ViewParam.HEIGHT * 2 / 20, labelsWidth, labelsHeight);
+		opponentPieceLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 5 / 20, labelsWidth, labelsHeight);
 		add(opponentPieceLabel);
 		playerPieceLabel = new JLabel("");
 		playerPieceLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -95,7 +95,7 @@ public class OthelloPanel extends JPanel {
 		add(playerPieceLabel);
 		opponentTimerLabel = new TimerLabel(gameView, gameView.getRoomNum(), false);
 		opponentTimerLabel.setHorizontalAlignment(JLabel.CENTER);
-		opponentTimerLabel.setBounds(ViewParam.WIDTH * 39 / 40 - labelsWidth, ViewParam.HEIGHT * 3 / 20, labelsWidth, labelsHeight);
+		opponentTimerLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 6 / 20, labelsWidth, labelsHeight);
 		add(opponentTimerLabel);
 		playerTimerLabel = new TimerLabel(gameView, gameView.getRoomNum(), true);
 		playerTimerLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -104,7 +104,7 @@ public class OthelloPanel extends JPanel {
 		
 		// パンダラベルの定義
 		pandaLabel = new JLabel();
-		pandaLabel.setBounds(ViewParam.WIDTH / 8 - pandaWidth / 2, ViewParam.HEIGHT / 2 - pandaHeight / 2, pandaWidth, pandaHeight);
+		pandaLabel.setBounds(ViewParam.WIDTH * 7 / 8 - pandaWidth / 2, ViewParam.HEIGHT / 2 - pandaHeight / 2, pandaWidth, pandaHeight);
 		pandaLabel.setOpaque(false);
 		add(pandaLabel);
 	}

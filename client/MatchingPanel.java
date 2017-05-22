@@ -13,6 +13,12 @@ public class MatchingPanel extends JPanel implements Runnable{
 	
 	private boolean flag = true;
 	
+	// イメージ
+	private JLabel imageLabel;
+	private int imageWidth = ViewParam.WIDTH;
+	private int imageHeight = ViewParam.HEIGHT * 8 / 10;
+	
+	
 	public MatchingPanel(GameView gameview, GameController gameController) {
 		this.gameView = gameview;
 		this.gameController = gameController;
@@ -20,9 +26,18 @@ public class MatchingPanel extends JPanel implements Runnable{
 		// レイアウトマネージャを無効
 		setLayout(null);
 		
+		// image
+		imageLabel = new JLabel();
+		imageLabel.setOpaque(false);
+		imageLabel.setHorizontalAlignment(JLabel.CENTER);
+		imageLabel.setVerticalAlignment(JLabel.TOP);
+		imageLabel.setIcon(gameView.getPanda().waitPanda());
+		imageLabel.setBounds(0, 0, imageWidth, imageHeight);
+		add(imageLabel);
+		
 		// ラベルを設定
 		messageLabel = new JLabel("マッチング中");
-		messageLabel.setBounds(ViewParam.WIDTH / 2 - messageLabelWidth / 2, ViewParam.HEIGHT * 4 / 5, messageLabelWidth, messageLabelHeight);
+		messageLabel.setBounds(ViewParam.WIDTH / 2 - messageLabelWidth / 2, ViewParam.HEIGHT * 17 / 20, messageLabelWidth, messageLabelHeight);
 		messageLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		// コンポーネントを追加

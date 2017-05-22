@@ -78,6 +78,7 @@ public class GameView extends JFrame{
 		setSize(ViewParam.WIDTH, ViewParam.HEIGHT);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		setResizable(false);
 	}
 	
 	

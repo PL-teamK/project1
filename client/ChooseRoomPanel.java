@@ -19,6 +19,11 @@ public class ChooseRoomPanel extends JPanel{
 	private int buttonWidth = ViewParam.WIDTH * 3 / 10;
 	private int buttonHeight = ViewParam.HEIGHT * 1 / 10;
 	
+	// イメージ
+	private JLabel imageLabel;
+	private int imageWidth = ViewParam.WIDTH;
+	private int imageHeight = ViewParam.HEIGHT / 2;
+	
 	
 	public ChooseRoomPanel(GameView gameview, GameController gameController) {
 		this.gameView = gameview;
@@ -26,6 +31,15 @@ public class ChooseRoomPanel extends JPanel{
 		
 		// レイアウトマネージャをオフにする。
 		setLayout(null);
+		
+		// イメージを生成
+		imageLabel = new JLabel();
+		imageLabel.setOpaque(false);
+		imageLabel.setIcon(gameView.getPanda().roomPanda());
+		imageLabel.setHorizontalAlignment(JLabel.CENTER);
+		imageLabel.setVerticalAlignment(JLabel.TOP);
+		imageLabel.setBounds(0, 0, imageWidth, imageHeight);
+		add(imageLabel);
 		
 		// ボタンを生成。
 		
@@ -37,12 +51,12 @@ public class ChooseRoomPanel extends JPanel{
 		timeThroughGameButton3 = new JButton("対局: 30分");
 		
 		// ボタン配置
-		timeByHandsButton1.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT / 5, buttonWidth, buttonHeight);
-		timeByHandsButton2.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT * 2 / 5, buttonWidth, buttonHeight);
-		timeByHandsButton3.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT * 3 / 5, buttonWidth,  buttonHeight);
-		timeThroughGameButton1.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT / 5, buttonWidth, buttonHeight);
-		timeThroughGameButton2.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT * 2 / 5, buttonWidth, buttonHeight);
-		timeThroughGameButton3.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT * 3 / 5, buttonWidth, buttonHeight);
+		timeByHandsButton1.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT * 6 / 9 - buttonHeight, buttonWidth, buttonHeight);
+		timeByHandsButton2.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT * 7 / 9 - buttonHeight, buttonWidth, buttonHeight);
+		timeByHandsButton3.setBounds(ViewParam.WIDTH / 3 - buttonWidth / 2, ViewParam.HEIGHT * 8 / 9 - buttonHeight, buttonWidth,  buttonHeight);
+		timeThroughGameButton1.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT * 6 / 9 - buttonHeight, buttonWidth, buttonHeight);
+		timeThroughGameButton2.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT * 7 / 9 - buttonHeight, buttonWidth, buttonHeight);
+		timeThroughGameButton3.setBounds(ViewParam.WIDTH * 2 / 3 - buttonWidth / 2, ViewParam.HEIGHT * 8 / 9 - buttonHeight, buttonWidth, buttonHeight);
 		
 		// ボタンが押された時の処理を追加
 		timeByHandsButton1.addActionListener(e -> {
