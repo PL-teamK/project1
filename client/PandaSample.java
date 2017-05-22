@@ -34,7 +34,9 @@ public class PandaSample{
 
 	private static final int MAX_IMAGE_NUM = 45;
 	private static final int MAX_GIF_NUM = 2;
-	private static final int MAX_SOUND_NUM = 45;
+	private static final int MAX_SOUND_NUM = 47;
+
+
 
     public ImageIcon[] image = new ImageIcon[MAX_IMAGE_NUM];
     public ImageIcon[] gif = new ImageIcon[MAX_GIF_NUM];
@@ -80,16 +82,28 @@ public class PandaSample{
 
 
 
-    //public ImageIcon usernamePanda(){
-    //  よくわからないメソッド
-    //}
+
+
+    //対戦相手を探しているときに表示するGIF  腰ふりGIF + バーカsound
+    public ImageIcon waitPanda(){
+
+        send_num = 45;
+        sounds[send_num] = new AppletAudioClip(getClass().getResource("./Sounds/etc/bakaM.aiff"));
+        return gif[0];
+  
+    }
 
 
 
 
-    //public ImageIcon waitPanda(){
-    //  よくわからないメソッド
-    //}
+
+    //プレイヤー名入力画面に表示するGIF    回転GIF + 負けろsound
+    public ImageIcon usernamePanda(){
+        send_num = 46;
+        sounds[send_num] = new AppletAudioClip(getClass().getResource("./Sounds/etc/loselose-gif.aiff"));
+        return gif[1];
+
+    }
 
 
 
@@ -144,10 +158,11 @@ public class PandaSample{
             situation = 2;
         }
 
-        //自分が置いて逆転以外の時は適当なGifを表示
+        //自分が置いて逆転以外の時は適当な画像を表示
         Random ran = new Random();
-        int gifnum = ran.nextInt(2);    //値が変わらないようならMath.random()使った方がよい
-        return gif[gifnum];
+        send_num = ran.nextInt(32);
+        return image[send_num];
+        
     }
 
 
@@ -165,7 +180,7 @@ public class PandaSample{
 
         }else{
             Random ran = new Random();
-            send_num = ran.nextInt(0);
+            send_num = ran.nextInt(32);
             return image[send_num];
         }
     }
@@ -173,9 +188,9 @@ public class PandaSample{
 
 
 
-    //音声を返す
-    public AudioClip sendSound(){
-        return sounds[send_num];
+    //音声を再生する
+    public void soundplay(){
+        sounds[send_num].play();
     }
 
 }
