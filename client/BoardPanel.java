@@ -151,7 +151,7 @@ public class BoardPanel extends JPanel {
 				return;
 			}
 			// ハイライト
-			buttons[y][x].setBorder(new LineBorder(ViewParam.PRE_HIGHLIGHT, 2, true));
+			buttons[x][y].setBorder(new LineBorder(ViewParam.PRE_HIGHLIGHT, 2, true));
 		}
 	}
 	
