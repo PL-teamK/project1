@@ -49,21 +49,21 @@ public class PandaSample{
     PandaSample(){
 
         //画像読み込み
-        image[0] = new ImageIcon("./Image/menu/startP.jpg");
-        image[1] = new ImageIcon("./Image/menu/roomSelect.jpg");
+        image[0] = new ImageIcon("./Image/menu/startP.PNG");
+        image[1] = new ImageIcon("./Image/menu/roomSelect.PNG");
         for(int i = 2;i < 42; i++){
             int filenum = i - 2;    //画像ファイルはp0.jpgからp39.jpg
             //System.out.println(i);
-            String filepath = "./Image/matching/p" + filenum + ".jpg";
+            String filepath = "./Image/matching/p" + filenum + ".PNG";
             image[i] = new ImageIcon((filepath));
 
             //マッチング中の音声も同時に読み込む
             //System.out.println("./Sounds/matching/m"+ filenum +".aiff");
             sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
         }
-        image[42] = new ImageIcon("./Image/result/win.jpg");
-        image[43] = new ImageIcon("./Image/result/lose.jpg");
-        image[44] = new ImageIcon("./Image/result/draw.jpg");
+        image[42] = new ImageIcon("./Image/result/win.PNG");
+        image[43] = new ImageIcon("./Image/result/lose.PNG");
+        image[44] = new ImageIcon("./Image/result/draw.PNG");
         gif[0] = new ImageIcon("./Image/etc/kosigif.gif");
         gif[1] = new ImageIcon("./Image/etc/kaiten.gif");
 
