@@ -27,7 +27,7 @@ public class DecideNamePanel extends JPanel {
 		nameField.setHorizontalAlignment(JTextField.CENTER);
 		
 		// 決定ボタンの作成
-		decideButton = new JButton("決定");
+		decideButton = new JButton("名前を入力してください");
 		decideButton.setEnabled(true);
 		decideButton.setBounds(ViewParam.WIDTH / 2 - decideButtonWidth / 2, ViewParam.HEIGHT * 4 / 7, decideButtonWidth, decideButtonHeight);
 		decideButton.addActionListener(e -> {

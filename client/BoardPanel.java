@@ -141,6 +141,20 @@ public class BoardPanel extends JPanel {
 		}
 	}
 	
+	public void printPreviusHighlight() {
+		if (othelloPanel.getHighlightFlag()) {
+			// ハイライトを行う場合、直前の手をハイライトする。
+			int x = gameController.getPreX();
+			int y = gameController.getPreY();
+			if ((x == 3 || x == 4) && (y == 3 || y == 4) && (x < 0 && x > 7) && (y < 0 && y > 7)) {
+				// 初期位置の場合は除く
+				return;
+			}
+			// ハイライト
+			buttons[y][x].setBorder(new LineBorder(ViewParam.PRE_HIGHLIGHT, 2, true));
+		}
+	}
+	
 }
 
 class CustomButton extends JButton {

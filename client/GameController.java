@@ -24,6 +24,10 @@ public class GameController implements Runnable {
 	private PrintWriter writer;
 	private BufferedReader bufReader;
 	
+	// 直前の石を記憶する
+	private int preX = 3;
+	private int preY = 3;
+	
 	public GameController() {
 		gameInit();
 		//testStub = new TestStub(this);
@@ -100,6 +104,8 @@ public class GameController implements Runnable {
 		isPassedFlag = false;
 		// サーバーに送信する．
 		// "put,1,4"のような形式で送信する．
+		preX = x;
+		preY = y;
 		String sendingMessage = "put," + x + "," + y;
 		System.out.println("send:" + sendingMessage);
 		writer.println(sendingMessage);
@@ -134,14 +140,15 @@ public class GameController implements Runnable {
 				comFlag = false;
 				
 				receiveMessage();
-			} else {
-				try {
-					// 負荷低減のため，処理遅延を行う
-					Thread.sleep(20);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-	 		}
+			} 
+//			else {
+//				try {
+//					// 負荷低減のため，処理遅延を行う
+//					Thread.sleep(20);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//	 		}
 			
 		}
 	}
@@ -187,7 +194,8 @@ public class GameController implements Runnable {
 			// model更新
 			int opponentColor = gameView.getPlayerColor() == GameModel.BLACK ? GameModel.WHITE : GameModel.BLACK;
 			gameModel.putPiece(opponentColor, x, y);
-			
+			preX = x;
+			preY = y;
 			// 置ける場所があるかを確認する.
 			if (canIPut()) {
 				// 自分の番に変更
@@ -290,6 +298,18 @@ public class GameController implements Runnable {
 		return ResultPanel.FINISH_BY_PASS_DRAW;
 	}
 	
+	public boolean getIspassedFlag() {
+		return isPassedFlag;
+	}
+	
+	public int getPreX() {
+		return preX;
+	}
+	
+	public int getPreY() {
+		return preY;
+	}
+	
 	public void waitCom() {
 		// 通信待機状態に入るために，フラグ変数を変更する．
 		comFlag = true;
@@ -324,5 +344,9 @@ public class GameController implements Runnable {
 		comFlag = false;
 		gameNotComplete = true;
 		serverAddress = "";
+		preX = 3;
+		preY = 3;
 	}
+	
+	
 }

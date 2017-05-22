@@ -27,6 +27,11 @@ public class OthelloPanel extends JPanel {
 	private boolean highlightFlag = true;
 	private boolean isMyTurn;
 	
+	// パンダ用ラベルを用意する。
+	private JLabel pandaLabel;
+	private int pandaWidth = ViewParam.WIDTH * 1 / 4 - 10;
+	private int pandaHeight = ViewParam.HEIGHT * 1 / 2;
+	
 	
 	public OthelloPanel(GameView gameview, GameController gameController) {
 		this.gameView = gameview;
@@ -95,18 +100,24 @@ public class OthelloPanel extends JPanel {
 		playerTimerLabel = new TimerLabel(gameView, gameView.getRoomNum(), true);
 		playerTimerLabel.setHorizontalAlignment(JLabel.CENTER);
 		playerTimerLabel.setBounds(ViewParam.WIDTH * 1 / 40, ViewParam.HEIGHT * 19 / 20 - labelsHeight, labelsWidth, labelsHeight);
-		add(playerTimerLabel);		
+		add(playerTimerLabel);	
+		
+		// パンダラベルの定義
+		pandaLabel = new JLabel();
+		pandaLabel.setBounds(ViewParam.WIDTH / 8 - pandaWidth / 2, ViewParam.HEIGHT / 2 - pandaHeight / 2, pandaWidth, pandaHeight);
+		pandaLabel.setOpaque(false);
+		add(pandaLabel);
 	}
 	
 	// このメソッドもsetIsMyTurn()に統合できるね
-	public void myTurn() {
-		((BoardPanel) boardPanel).changeButtonsStateTo(true);
-		((BoardPanel) boardPanel).printBoard();
-		if (highlightFlag) {
-			// ハイライトを行う．
-			((BoardPanel) boardPanel).printHighlight();
-		}
-	}
+//	public void myTurn() {
+//		((BoardPanel) boardPanel).changeButtonsStateTo(true);
+//		((BoardPanel) boardPanel).printBoard();
+//		if (highlightFlag) {
+//			// ハイライトを行う．
+//			((BoardPanel) boardPanel).printHighlight();
+//		}
+//	}
 	
 	public void setIsMyTurn(boolean bool) {
 		// 手番が変化する度に呼び出される．
@@ -118,13 +129,27 @@ public class OthelloPanel extends JPanel {
 		if (highlightFlag && isMyTurn) {
 			// ハイライト設定がしてあり，自分のターンであればハイライトを行う．
 			((BoardPanel) boardPanel).printHighlight();
+			((BoardPanel) boardPanel).printPreviusHighlight();
 		} else {
 			// そうでない場合にはハイライトを消去する．
 			((BoardPanel) boardPanel).deleteHighlight();
 		}
 		// 駒数ラベルの更新を行う．
-		opponentPieceLabel.setText((gameView.getPlayerColor() == GameModel.BLACK ? "白" : "黒") + ":" + String.valueOf(countNumOf(gameView.getPlayerColor() == GameModel.BLACK ? GameModel.WHITE : GameModel.BLACK)));
-		playerPieceLabel.setText((gameView.getPlayerColor() == GameModel.BLACK ? "黒" : "白") + ":" + String.valueOf(countNumOf(gameView.getPlayerColor())));
+		int myPieceNum = countNumOf(gameView.getPlayerColor());
+		int opponentPieceNum = countNumOf(gameView.getPlayerColor() == GameModel.BLACK ? GameModel.WHITE : GameModel.BLACK);
+		opponentPieceLabel.setText((gameView.getPlayerColor() == GameModel.BLACK ? "白" : "黒") + ":" + String.valueOf(opponentPieceNum));
+		playerPieceLabel.setText((gameView.getPlayerColor() == GameModel.BLACK ? "黒" : "白") + ":" + String.valueOf(myPieceNum));
+		
+		// パンダラベルの更新を行う。
+		if (isMyTurn || gameController.getIspassedFlag()) {
+			// 自分のターンがきた場合には、相手のターンが終わったとき
+			pandaLabel.setIcon(gameView.getPanda().oppturnPanda(gameController.getPreX(), gameController.getPreY(), myPieceNum, opponentPieceNum));
+			gameView.getPanda().soundplay();
+		} else {
+			// 自分のターン終了時
+			pandaLabel.setIcon(gameView.getPanda().myturnPanda(gameController.getPreX(), gameController.getPreY(), myPieceNum, opponentPieceNum));
+			gameView.getPanda().soundplay();
+		}
 		
 		// timerlabelのステータスを変更する．
 		playerTimerLabel.setFlag(bool);
@@ -148,6 +173,10 @@ public class OthelloPanel extends JPanel {
 	
 	public boolean getIsMyTurn(boolean bool) {
 		return isMyTurn;
+	}
+	
+	public boolean getHighlightFlag() {
+		return highlightFlag;
 	}
 	
 }

@@ -59,7 +59,7 @@ public class PandaSample{
 
             //マッチング中の音声も同時に読み込む
             System.out.println("./Sounds/matching/m"+ filenum +".aiff");
-            //sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
+            sounds[i] = new AppletAudioClip(getClass().getResource("./Sounds/matching/m"+ filenum +".aiff"));
         }
         image[42] = new ImageIcon("./Image/result/win.jpg");
         image[43] = new ImageIcon("./Image/result/lose.jpg");
@@ -158,6 +158,7 @@ public class PandaSample{
             situation = 2;
         }
 
+        
         //自分が置いて逆転以外の時は適当な画像を表示
         Random ran = new Random();
         send_num = ran.nextInt(32);
